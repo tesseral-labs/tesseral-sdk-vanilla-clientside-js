@@ -59,8 +59,8 @@ export class Users {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.3",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
+                "X-Fern-SDK-Version": "0.0.4",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -69,6 +69,7 @@ export class Users {
             requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
@@ -168,8 +169,8 @@ export class Users {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.3",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
+                "X-Fern-SDK-Version": "0.0.4",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -177,6 +178,7 @@ export class Users {
             requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
@@ -276,8 +278,8 @@ export class Users {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.3",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
+                "X-Fern-SDK-Version": "0.0.4",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -285,6 +287,7 @@ export class Users {
             requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
@@ -389,8 +392,8 @@ export class Users {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.3",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
+                "X-Fern-SDK-Version": "0.0.4",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.4",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -399,6 +402,7 @@ export class Users {
             body: serializers.User.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
