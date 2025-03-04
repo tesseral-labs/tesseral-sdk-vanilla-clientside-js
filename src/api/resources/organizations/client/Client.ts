@@ -11,7 +11,6 @@ import * as errors from "../../../../errors/index";
 export declare namespace Organizations {
     interface Options {
         environment: core.Supplier<string>;
-        backendApiKey?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
@@ -51,14 +50,13 @@ export class Organizations {
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/google-hosted-domains"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/google-hosted-domains"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -169,14 +167,13 @@ export class Organizations {
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/google-hosted-domains"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/google-hosted-domains"),
             method: "PATCH",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -286,14 +283,13 @@ export class Organizations {
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/microsoft-tenant-ids"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/microsoft-tenant-ids"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -404,14 +400,13 @@ export class Organizations {
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/microsoft-tenant-ids"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/microsoft-tenant-ids"),
             method: "PATCH",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -513,14 +508,13 @@ export class Organizations {
         requestOptions?: Organizations.RequestOptions
     ): Promise<Tesseral.GetOrganizationResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/organization"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/organization"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -622,14 +616,13 @@ export class Organizations {
         requestOptions?: Organizations.RequestOptions
     ): Promise<Tesseral.UpdateOrganizationResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/organization"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/organization"),
             method: "PATCH",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -713,15 +706,5 @@ export class Organizations {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer =
-            (await core.Supplier.get(this._options.backendApiKey)) ?? process?.env["TESSERAL_BACKEND_API_KEY"];
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
     }
 }

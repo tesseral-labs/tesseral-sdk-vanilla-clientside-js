@@ -11,7 +11,6 @@ import * as errors from "../../../../errors/index";
 export declare namespace UserInvites {
     interface Options {
         environment: core.Supplier<string>;
-        backendApiKey?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
@@ -51,14 +50,13 @@ export class UserInvites {
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/user-invites"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/user-invites"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -161,14 +159,13 @@ export class UserInvites {
         requestOptions?: UserInvites.RequestOptions
     ): Promise<Tesseral.CreateUserInviteResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/user-invites"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/user-invites"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -273,15 +270,14 @@ export class UserInvites {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `frontend/v1/user-invites/${encodeURIComponent(id)}`
+                `api/frontend/v1/user-invites/${encodeURIComponent(id)}`
             ),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -385,15 +381,14 @@ export class UserInvites {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `frontend/v1/user-invites/${encodeURIComponent(id)}`
+                `api/frontend/v1/user-invites/${encodeURIComponent(id)}`
             ),
             method: "DELETE",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -476,15 +471,5 @@ export class UserInvites {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer =
-            (await core.Supplier.get(this._options.backendApiKey)) ?? process?.env["TESSERAL_BACKEND_API_KEY"];
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
     }
 }

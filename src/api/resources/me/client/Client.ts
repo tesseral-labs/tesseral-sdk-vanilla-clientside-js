@@ -11,7 +11,6 @@ import * as errors from "../../../../errors/index";
 export declare namespace Me {
     interface Options {
         environment: core.Supplier<string>;
-        backendApiKey?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
@@ -41,14 +40,13 @@ export class Me {
      */
     public async whoami(requestOptions?: Me.RequestOptions): Promise<Tesseral.WhoamiResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/me"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -150,15 +148,14 @@ export class Me {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "frontend/v1/me/authenticator-app/options"
+                "api/frontend/v1/me/authenticator-app/options"
             ),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -262,15 +259,14 @@ export class Me {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "frontend/v1/me/authenticator-app/register"
+                "api/frontend/v1/me/authenticator-app/register"
             ),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -379,14 +375,13 @@ export class Me {
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/me/passkeys"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me/passkeys"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -485,14 +480,13 @@ export class Me {
      */
     public async getPasskeyOptions(requestOptions?: Me.RequestOptions): Promise<Tesseral.GetPasskeyOptionsResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/me/passkeys/options"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me/passkeys/options"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -594,14 +588,13 @@ export class Me {
         requestOptions?: Me.RequestOptions
     ): Promise<Tesseral.RegisterPasskeyResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/me/passkeys/register"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me/passkeys/register"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -706,15 +699,14 @@ export class Me {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `frontend/v1/me/passkeys/${encodeURIComponent(id)}`
+                `api/frontend/v1/me/passkeys/${encodeURIComponent(id)}`
             ),
             method: "DELETE",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -818,14 +810,13 @@ export class Me {
         requestOptions?: Me.RequestOptions
     ): Promise<Tesseral.SetPasswordResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/me/set-password"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me/set-password"),
             method: "POST",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -909,15 +900,5 @@ export class Me {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer =
-            (await core.Supplier.get(this._options.backendApiKey)) ?? process?.env["TESSERAL_BACKEND_API_KEY"];
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
     }
 }

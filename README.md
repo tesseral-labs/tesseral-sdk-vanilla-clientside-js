@@ -18,7 +18,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { TesseralClient } from "@tesseral/tesseral-vanilla-clientside";
 
-const client = new TesseralClient({ environment: "YOUR_BASE_URL", backendApiKey: "YOUR_BACKEND_API_KEY" });
+const client = new TesseralClient({ environment: "YOUR_BASE_URL" });
 await client.logout();
 ```
 

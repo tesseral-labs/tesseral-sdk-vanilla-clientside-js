@@ -11,7 +11,6 @@ import * as errors from "../../../../errors/index";
 export declare namespace Projects {
     interface Options {
         environment: core.Supplier<string>;
-        backendApiKey?: core.Supplier<core.BearerToken | undefined>;
         fetcher?: core.FetchFunction;
     }
 
@@ -41,14 +40,13 @@ export class Projects {
      */
     public async getProject(requestOptions?: Projects.RequestOptions): Promise<Tesseral.GetProjectResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "frontend/v1/project"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/project"),
             method: "GET",
             headers: {
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.2",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.2",
+                "X-Fern-SDK-Version": "0.0.3",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.3",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -131,15 +129,5 @@ export class Projects {
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer =
-            (await core.Supplier.get(this._options.backendApiKey)) ?? process?.env["TESSERAL_BACKEND_API_KEY"];
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
     }
 }
