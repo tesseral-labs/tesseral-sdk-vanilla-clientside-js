@@ -45,3 +45,8 @@ export * from "./UserInvite";
 export * from "./WhoamiResponse";
 export * from "./ApiError";
 export * from "./ApiErrorDetail";
+export * from "./AccessTokenClaims";
+export * from "./AccessTokenImpersonator";
+export * from "./AccessTokenOrganization";
+export * from "./AccessTokenSession";
+export * from "./AccessTokenUser";

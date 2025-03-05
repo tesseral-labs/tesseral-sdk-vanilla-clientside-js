@@ -59,8 +59,8 @@ export class Users {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.4",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.4",
+                "X-Fern-SDK-Version": "0.0.5",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -169,8 +169,8 @@ export class Users {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.4",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.4",
+                "X-Fern-SDK-Version": "0.0.5",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -278,8 +278,8 @@ export class Users {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.4",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.4",
+                "X-Fern-SDK-Version": "0.0.5",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -392,8 +392,8 @@ export class Users {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.4",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.4",
+                "X-Fern-SDK-Version": "0.0.5",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
