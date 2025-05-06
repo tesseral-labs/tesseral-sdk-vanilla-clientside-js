@@ -14,7 +14,7 @@ export const RegisterAuthenticatorAppRequest: core.serialization.Schema<
 });
 
 export declare namespace RegisterAuthenticatorAppRequest {
-    interface Raw {
+    export interface Raw {
         totpCode?: string | null;
     }
 }

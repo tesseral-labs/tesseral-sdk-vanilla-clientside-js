@@ -14,7 +14,7 @@ export const GetAuthenticatorAppOptionsResponse: core.serialization.ObjectSchema
 });
 
 export declare namespace GetAuthenticatorAppOptionsResponse {
-    interface Raw {
+    export interface Raw {
         otpauthUri?: string | null;
     }
 }

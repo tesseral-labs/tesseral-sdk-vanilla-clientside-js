@@ -9,18 +9,22 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Users {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -41,10 +45,10 @@ export class Users {
      */
     public async listUsers(
         request: Tesseral.UsersListUsersRequest = {},
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<Tesseral.ListUsersResponse> {
         const { organizationId, pageToken } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (organizationId != null) {
             _queryParams["organizationId"] = organizationId;
         }
@@ -54,15 +58,20 @@ export class Users {
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/users"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/users",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -92,7 +101,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -102,7 +111,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -112,7 +121,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -122,7 +131,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -139,7 +148,7 @@ export class Users {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError("Timeout exceeded when calling GET /frontend/v1/users.");
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -162,17 +171,19 @@ export class Users {
     public async getUser(id: string, requestOptions?: Users.RequestOptions): Promise<Tesseral.GetUserResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `api/frontend/v1/users/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `frontend/v1/users/${encodeURIComponent(id)}`,
             ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -201,7 +212,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -211,7 +222,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -221,7 +232,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -231,7 +242,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -248,7 +259,7 @@ export class Users {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError("Timeout exceeded when calling GET /frontend/v1/users/{id}.");
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -271,17 +282,19 @@ export class Users {
     public async deleteUser(id: string, requestOptions?: Users.RequestOptions): Promise<Tesseral.DeleteUserResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `api/frontend/v1/users/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `frontend/v1/users/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -310,7 +323,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -320,7 +333,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -330,7 +343,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -340,7 +353,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -357,7 +370,7 @@ export class Users {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError("Timeout exceeded when calling DELETE /frontend/v1/users/{id}.");
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -381,21 +394,23 @@ export class Users {
     public async updateUser(
         id: string,
         request: Tesseral.User,
-        requestOptions?: Users.RequestOptions
+        requestOptions?: Users.RequestOptions,
     ): Promise<Tesseral.UpdateUserResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `api/frontend/v1/users/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `frontend/v1/users/${encodeURIComponent(id)}`,
             ),
             method: "PATCH",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -425,7 +440,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -435,7 +450,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -445,7 +460,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -455,7 +470,7 @@ export class Users {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -472,7 +487,7 @@ export class Users {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError("Timeout exceeded when calling PATCH /frontend/v1/users/{id}.");
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,

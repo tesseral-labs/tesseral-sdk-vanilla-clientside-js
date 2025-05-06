@@ -20,7 +20,7 @@ export const SamlConnection: core.serialization.ObjectSchema<serializers.SamlCon
     });
 
 export declare namespace SamlConnection {
-    interface Raw {
+    export interface Raw {
         id?: string | null;
         createTime?: string | null;
         updateTime?: string | null;

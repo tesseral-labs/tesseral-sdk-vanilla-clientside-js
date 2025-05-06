@@ -15,7 +15,7 @@ export const RegisterPasskeyRequest: core.serialization.Schema<
 });
 
 export declare namespace RegisterPasskeyRequest {
-    interface Raw {
+    export interface Raw {
         attestationObject?: string | null;
         rpId?: string | null;
     }

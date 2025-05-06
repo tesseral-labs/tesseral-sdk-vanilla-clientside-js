@@ -16,7 +16,7 @@ export const UserInvite: core.serialization.ObjectSchema<serializers.UserInvite.
     });
 
 export declare namespace UserInvite {
-    interface Raw {
+    export interface Raw {
         id?: string | null;
         createTime?: string | null;
         updateTime?: string | null;

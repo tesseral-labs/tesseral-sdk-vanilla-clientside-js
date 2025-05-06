@@ -713,6 +713,46 @@ await client.me.setPassword();
 </dl>
 </details>
 
+<details><summary><code>client.me.<a href="/src/api/resources/me/client/Client.ts">listSwitchableOrganizations</a>() -> Tesseral.ListSwitchableOrganizationsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.me.listSwitchableOrganizations();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `Me.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Projects
 
 <details><summary><code>client.projects.<a href="/src/api/resources/projects/client/Client.ts">getProject</a>() -> Tesseral.GetProjectResponse</code></summary>

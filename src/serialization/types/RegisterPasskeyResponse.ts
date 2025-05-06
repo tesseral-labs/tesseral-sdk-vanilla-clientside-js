@@ -15,7 +15,7 @@ export const RegisterPasskeyResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace RegisterPasskeyResponse {
-    interface Raw {
+    export interface Raw {
         passkey?: Passkey.Raw | null;
     }
 }

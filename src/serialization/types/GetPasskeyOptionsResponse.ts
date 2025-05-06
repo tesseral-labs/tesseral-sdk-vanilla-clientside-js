@@ -17,7 +17,7 @@ export const GetPasskeyOptionsResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace GetPasskeyOptionsResponse {
-    interface Raw {
+    export interface Raw {
         rpId?: string | null;
         rpName?: string | null;
         userId?: string | null;

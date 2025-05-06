@@ -14,7 +14,7 @@ export const RefreshResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace RefreshResponse {
-    interface Raw {
+    export interface Raw {
         accessToken?: string | null;
     }
 }

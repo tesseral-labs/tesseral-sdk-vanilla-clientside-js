@@ -13,7 +13,7 @@ export const WhoamiResponse: core.serialization.ObjectSchema<serializers.WhoamiR
     });
 
 export declare namespace WhoamiResponse {
-    interface Raw {
+    export interface Raw {
         user?: User.Raw | null;
     }
 }

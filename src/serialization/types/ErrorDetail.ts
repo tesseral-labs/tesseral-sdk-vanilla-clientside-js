@@ -6,14 +6,14 @@ import * as serializers from "../index";
 import * as Tesseral from "../../api/index";
 import * as core from "../../core";
 
-export const ApiErrorDetail: core.serialization.ObjectSchema<serializers.ApiErrorDetail.Raw, Tesseral.ApiErrorDetail> =
+export const ErrorDetail: core.serialization.ObjectSchema<serializers.ErrorDetail.Raw, Tesseral.ErrorDetail> =
     core.serialization.object({
         description: core.serialization.string().optional(),
         docsLink: core.serialization.string().optional(),
     });
 
-export declare namespace ApiErrorDetail {
-    interface Raw {
+export declare namespace ErrorDetail {
+    export interface Raw {
         description?: string | null;
         docsLink?: string | null;
     }

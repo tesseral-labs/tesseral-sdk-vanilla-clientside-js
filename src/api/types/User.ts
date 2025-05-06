@@ -11,4 +11,6 @@ export interface User {
     googleUserId?: string;
     microsoftUserId?: string;
     hasAuthenticatorApp?: boolean;
+    displayName?: string;
+    profilePictureUrl?: string;
 }

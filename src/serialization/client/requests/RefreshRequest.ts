@@ -12,7 +12,7 @@ export const RefreshRequest: core.serialization.Schema<serializers.RefreshReques
     });
 
 export declare namespace RefreshRequest {
-    interface Raw {
+    export interface Raw {
         refreshToken?: string | null;
     }
 }
