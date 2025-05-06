@@ -9,18 +9,22 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Me {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -40,15 +44,20 @@ export class Me {
      */
     public async whoami(requestOptions?: Me.RequestOptions): Promise<Tesseral.WhoamiResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/me",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -77,7 +86,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -87,7 +96,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -97,7 +106,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -107,7 +116,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -124,7 +133,7 @@ export class Me {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError("Timeout exceeded when calling GET /frontend/v1/me.");
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -144,21 +153,23 @@ export class Me {
      *     await client.me.getAuthenticatorAppOptions()
      */
     public async getAuthenticatorAppOptions(
-        requestOptions?: Me.RequestOptions
+        requestOptions?: Me.RequestOptions,
     ): Promise<Tesseral.GetAuthenticatorAppOptionsResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "api/frontend/v1/me/authenticator-app/options"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/me/authenticator-app/options",
             ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -187,7 +198,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -197,7 +208,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -207,7 +218,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -217,7 +228,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -234,7 +245,9 @@ export class Me {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling POST /frontend/v1/me/authenticator-app/options.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -256,21 +269,23 @@ export class Me {
      */
     public async registerAuthenticatorApp(
         request: Tesseral.RegisterAuthenticatorAppRequest = {},
-        requestOptions?: Me.RequestOptions
+        requestOptions?: Me.RequestOptions,
     ): Promise<Tesseral.RegisterAuthenticatorAppResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                "api/frontend/v1/me/authenticator-app/register"
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/me/authenticator-app/register",
             ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -300,7 +315,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -310,7 +325,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -320,7 +335,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -330,7 +345,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -347,7 +362,9 @@ export class Me {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling POST /frontend/v1/me/authenticator-app/register.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -369,24 +386,29 @@ export class Me {
      */
     public async listMyPasskeys(
         request: Tesseral.MeListMyPasskeysRequest = {},
-        requestOptions?: Me.RequestOptions
+        requestOptions?: Me.RequestOptions,
     ): Promise<Tesseral.ListMyPasskeysResponse> {
         const { pageToken } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (pageToken != null) {
             _queryParams["pageToken"] = pageToken;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me/passkeys"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/me/passkeys",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -416,7 +438,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -426,7 +448,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -436,7 +458,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -446,7 +468,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -463,7 +485,7 @@ export class Me {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError("Timeout exceeded when calling GET /frontend/v1/me/passkeys.");
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -484,15 +506,20 @@ export class Me {
      */
     public async getPasskeyOptions(requestOptions?: Me.RequestOptions): Promise<Tesseral.GetPasskeyOptionsResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me/passkeys/options"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/me/passkeys/options",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -521,7 +548,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -531,7 +558,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -541,7 +568,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -551,7 +578,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -568,7 +595,9 @@ export class Me {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling POST /frontend/v1/me/passkeys/options.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -590,18 +619,23 @@ export class Me {
      */
     public async registerPasskey(
         request: Tesseral.RegisterPasskeyRequest = {},
-        requestOptions?: Me.RequestOptions
+        requestOptions?: Me.RequestOptions,
     ): Promise<Tesseral.RegisterPasskeyResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me/passkeys/register"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/me/passkeys/register",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -631,7 +665,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -641,7 +675,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -651,7 +685,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -661,7 +695,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -678,7 +712,9 @@ export class Me {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling POST /frontend/v1/me/passkeys/register.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -700,21 +736,23 @@ export class Me {
      */
     public async deleteMyPasskey(
         id: string,
-        requestOptions?: Me.RequestOptions
+        requestOptions?: Me.RequestOptions,
     ): Promise<Tesseral.DeleteMyPasskeyResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `api/frontend/v1/me/passkeys/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `frontend/v1/me/passkeys/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -743,7 +781,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -753,7 +791,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -763,7 +801,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -773,7 +811,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -790,7 +828,9 @@ export class Me {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling DELETE /frontend/v1/me/passkeys/{id}.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -814,18 +854,23 @@ export class Me {
      */
     public async setPassword(
         request: Tesseral.SetPasswordRequest = {},
-        requestOptions?: Me.RequestOptions
+        requestOptions?: Me.RequestOptions,
     ): Promise<Tesseral.SetPasswordResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/me/set-password"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/set-user-password",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -855,7 +900,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -865,7 +910,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -875,7 +920,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -885,7 +930,7 @@ export class Me {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -902,7 +947,123 @@ export class Me {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling POST /frontend/v1/set-user-password.",
+                );
+            case "unknown":
+                throw new errors.TesseralError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {Me.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Tesseral.BadRequestError}
+     * @throws {@link Tesseral.UnauthorizedError}
+     * @throws {@link Tesseral.ForbiddenError}
+     * @throws {@link Tesseral.NotFoundError}
+     *
+     * @example
+     *     await client.me.listSwitchableOrganizations()
+     */
+    public async listSwitchableOrganizations(
+        requestOptions?: Me.RequestOptions,
+    ): Promise<Tesseral.ListSwitchableOrganizationsResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/switch-organizations/organizations",
+            ),
+            method: "GET",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.ListSwitchableOrganizationsResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Tesseral.BadRequestError(
+                        serializers.ApiError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 401:
+                    throw new Tesseral.UnauthorizedError(
+                        serializers.ApiError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 403:
+                    throw new Tesseral.ForbiddenError(
+                        serializers.ApiError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 404:
+                    throw new Tesseral.NotFoundError(
+                        serializers.ApiError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                default:
+                    throw new errors.TesseralError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.TesseralError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling GET /frontend/v1/switch-organizations/organizations.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,

@@ -9,18 +9,22 @@ import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
 export declare namespace SamlConnections {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
@@ -41,24 +45,29 @@ export class SamlConnections {
      */
     public async listSamlConnections(
         request: Tesseral.SamlConnectionsListSamlConnectionsRequest = {},
-        requestOptions?: SamlConnections.RequestOptions
+        requestOptions?: SamlConnections.RequestOptions,
     ): Promise<Tesseral.ListSamlConnectionsResponse> {
         const { pageToken } = request;
-        const _queryParams: Record<string, string | string[] | object | object[]> = {};
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (pageToken != null) {
             _queryParams["pageToken"] = pageToken;
         }
 
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/saml-connections"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/saml-connections",
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
@@ -88,7 +97,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -98,7 +107,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -108,7 +117,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -118,7 +127,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -135,7 +144,9 @@ export class SamlConnections {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling GET /frontend/v1/saml-connections.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -157,18 +168,23 @@ export class SamlConnections {
      */
     public async createSamlConnection(
         request: Tesseral.SamlConnection,
-        requestOptions?: SamlConnections.RequestOptions
+        requestOptions?: SamlConnections.RequestOptions,
     ): Promise<Tesseral.CreateSamlConnectionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/saml-connections"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/saml-connections",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -198,7 +214,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -208,7 +224,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -218,7 +234,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -228,7 +244,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -245,7 +261,9 @@ export class SamlConnections {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling POST /frontend/v1/saml-connections.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -267,21 +285,23 @@ export class SamlConnections {
      */
     public async getSamlConnection(
         id: string,
-        requestOptions?: SamlConnections.RequestOptions
+        requestOptions?: SamlConnections.RequestOptions,
     ): Promise<Tesseral.GetSamlConnectionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `api/frontend/v1/saml-connections/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `frontend/v1/saml-connections/${encodeURIComponent(id)}`,
             ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -310,7 +330,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -320,7 +340,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -330,7 +350,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -340,7 +360,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -357,7 +377,9 @@ export class SamlConnections {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling GET /frontend/v1/saml-connections/{id}.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -379,21 +401,23 @@ export class SamlConnections {
      */
     public async deleteSamlConnection(
         id: string,
-        requestOptions?: SamlConnections.RequestOptions
+        requestOptions?: SamlConnections.RequestOptions,
     ): Promise<Tesseral.DeleteSamlConnectionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `api/frontend/v1/saml-connections/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `frontend/v1/saml-connections/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -422,7 +446,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -432,7 +456,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -442,7 +466,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -452,7 +476,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -469,7 +493,9 @@ export class SamlConnections {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling DELETE /frontend/v1/saml-connections/{id}.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -493,21 +519,23 @@ export class SamlConnections {
     public async updateSamlConnection(
         id: string,
         request: Tesseral.SamlConnection,
-        requestOptions?: SamlConnections.RequestOptions
+        requestOptions?: SamlConnections.RequestOptions,
     ): Promise<Tesseral.UpdateSamlConnectionResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
-                await core.Supplier.get(this._options.environment),
-                `api/frontend/v1/saml-connections/${encodeURIComponent(id)}`
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `frontend/v1/saml-connections/${encodeURIComponent(id)}`,
             ),
             method: "PATCH",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -537,7 +565,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -547,7 +575,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -557,7 +585,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -567,7 +595,7 @@ export class SamlConnections {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -584,7 +612,9 @@ export class SamlConnections {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling PATCH /frontend/v1/saml-connections/{id}.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,

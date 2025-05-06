@@ -10,11 +10,11 @@ export const AccessTokenImpersonator: core.serialization.ObjectSchema<
     serializers.AccessTokenImpersonator.Raw,
     Tesseral.AccessTokenImpersonator
 > = core.serialization.object({
-    email: core.serialization.string().optional(),
+    email: core.serialization.string(),
 });
 
 export declare namespace AccessTokenImpersonator {
-    interface Raw {
-        email?: string | null;
+    export interface Raw {
+        email: string;
     }
 }

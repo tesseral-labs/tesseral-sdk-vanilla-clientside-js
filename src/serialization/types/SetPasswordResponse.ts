@@ -12,5 +12,5 @@ export const SetPasswordResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({});
 
 export declare namespace SetPasswordResponse {
-    interface Raw {}
+    export interface Raw {}
 }

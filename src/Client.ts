@@ -16,23 +16,63 @@ import { UserInvites } from "./api/resources/userInvites/client/Client";
 import { Users } from "./api/resources/users/client/Client";
 
 export declare namespace TesseralClient {
-    interface Options {
+    export interface Options {
         environment: core.Supplier<string>;
+        /** Specify a custom URL to connect the client to. */
+        baseUrl?: core.Supplier<string>;
         fetcher?: core.FetchFunction;
     }
 
-    interface RequestOptions {
+    export interface RequestOptions {
         /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
         /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 }
 
 export class TesseralClient {
+    protected _organizations: Organizations | undefined;
+    protected _me: Me | undefined;
+    protected _projects: Projects | undefined;
+    protected _samlConnections: SamlConnections | undefined;
+    protected _scimApiKeys: ScimApiKeys | undefined;
+    protected _userInvites: UserInvites | undefined;
+    protected _users: Users | undefined;
+
     constructor(protected readonly _options: TesseralClient.Options) {}
+
+    public get organizations(): Organizations {
+        return (this._organizations ??= new Organizations(this._options));
+    }
+
+    public get me(): Me {
+        return (this._me ??= new Me(this._options));
+    }
+
+    public get projects(): Projects {
+        return (this._projects ??= new Projects(this._options));
+    }
+
+    public get samlConnections(): SamlConnections {
+        return (this._samlConnections ??= new SamlConnections(this._options));
+    }
+
+    public get scimApiKeys(): ScimApiKeys {
+        return (this._scimApiKeys ??= new ScimApiKeys(this._options));
+    }
+
+    public get userInvites(): UserInvites {
+        return (this._userInvites ??= new UserInvites(this._options));
+    }
+
+    public get users(): Users {
+        return (this._users ??= new Users(this._options));
+    }
 
     /**
      * @param {Tesseral.LogoutRequest} request
@@ -48,18 +88,23 @@ export class TesseralClient {
      */
     public async logout(
         request: Tesseral.LogoutRequest = {},
-        requestOptions?: TesseralClient.RequestOptions
+        requestOptions?: TesseralClient.RequestOptions,
     ): Promise<Tesseral.LogoutResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/logout"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/logout",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -89,7 +134,7 @@ export class TesseralClient {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -99,7 +144,7 @@ export class TesseralClient {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -109,7 +154,7 @@ export class TesseralClient {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -119,7 +164,7 @@ export class TesseralClient {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -136,7 +181,7 @@ export class TesseralClient {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError("Timeout exceeded when calling POST /frontend/v1/logout.");
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -158,18 +203,23 @@ export class TesseralClient {
      */
     public async refresh(
         request: Tesseral.RefreshRequest = {},
-        requestOptions?: TesseralClient.RequestOptions
+        requestOptions?: TesseralClient.RequestOptions,
     ): Promise<Tesseral.RefreshResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "api/frontend/v1/refresh"),
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/refresh",
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.5",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.5",
+                "X-Fern-SDK-Version": "0.0.6",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
@@ -199,7 +249,7 @@ export class TesseralClient {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 401:
                     throw new Tesseral.UnauthorizedError(
@@ -209,7 +259,7 @@ export class TesseralClient {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 403:
                     throw new Tesseral.ForbiddenError(
@@ -219,7 +269,7 @@ export class TesseralClient {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 case 404:
                     throw new Tesseral.NotFoundError(
@@ -229,7 +279,7 @@ export class TesseralClient {
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
-                        })
+                        }),
                     );
                 default:
                     throw new errors.TesseralError({
@@ -246,53 +296,11 @@ export class TesseralClient {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError();
+                throw new errors.TesseralTimeoutError("Timeout exceeded when calling POST /frontend/v1/refresh.");
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
                 });
         }
-    }
-
-    protected _organizations: Organizations | undefined;
-
-    public get organizations(): Organizations {
-        return (this._organizations ??= new Organizations(this._options));
-    }
-
-    protected _me: Me | undefined;
-
-    public get me(): Me {
-        return (this._me ??= new Me(this._options));
-    }
-
-    protected _projects: Projects | undefined;
-
-    public get projects(): Projects {
-        return (this._projects ??= new Projects(this._options));
-    }
-
-    protected _samlConnections: SamlConnections | undefined;
-
-    public get samlConnections(): SamlConnections {
-        return (this._samlConnections ??= new SamlConnections(this._options));
-    }
-
-    protected _scimApiKeys: ScimApiKeys | undefined;
-
-    public get scimApiKeys(): ScimApiKeys {
-        return (this._scimApiKeys ??= new ScimApiKeys(this._options));
-    }
-
-    protected _userInvites: UserInvites | undefined;
-
-    public get userInvites(): UserInvites {
-        return (this._userInvites ??= new UserInvites(this._options));
-    }
-
-    protected _users: Users | undefined;
-
-    public get users(): Users {
-        return (this._users ??= new Users(this._options));
     }
 }

@@ -10,5 +10,5 @@ export const LogoutRequest: core.serialization.Schema<serializers.LogoutRequest.
     core.serialization.object({});
 
 export declare namespace LogoutRequest {
-    interface Raw {}
+    export interface Raw {}
 }

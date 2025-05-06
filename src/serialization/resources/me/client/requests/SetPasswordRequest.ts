@@ -14,7 +14,7 @@ export const SetPasswordRequest: core.serialization.Schema<
 });
 
 export declare namespace SetPasswordRequest {
-    interface Raw {
+    export interface Raw {
         password?: string | null;
     }
 }

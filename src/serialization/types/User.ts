@@ -15,10 +15,12 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, Tessera
     googleUserId: core.serialization.string().optional(),
     microsoftUserId: core.serialization.string().optional(),
     hasAuthenticatorApp: core.serialization.boolean().optional(),
+    displayName: core.serialization.string().optional(),
+    profilePictureUrl: core.serialization.string().optional(),
 });
 
 export declare namespace User {
-    interface Raw {
+    export interface Raw {
         id?: string | null;
         email?: string | null;
         createTime?: string | null;
@@ -27,5 +29,7 @@ export declare namespace User {
         googleUserId?: string | null;
         microsoftUserId?: string | null;
         hasAuthenticatorApp?: boolean | null;
+        displayName?: string | null;
+        profilePictureUrl?: string | null;
     }
 }

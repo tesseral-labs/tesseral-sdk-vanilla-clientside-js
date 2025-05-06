@@ -14,7 +14,7 @@ export const RegisterAuthenticatorAppResponse: core.serialization.ObjectSchema<
 });
 
 export declare namespace RegisterAuthenticatorAppResponse {
-    interface Raw {
+    export interface Raw {
         recoveryCodes?: string[] | null;
     }
 }
