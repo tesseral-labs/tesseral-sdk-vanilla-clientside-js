@@ -18,4 +18,5 @@ export interface Organization {
     googleHostedDomains?: string[];
     microsoftTenantIds?: string[];
     samlEnabled?: boolean;
+    customRolesEnabled?: boolean;
 }

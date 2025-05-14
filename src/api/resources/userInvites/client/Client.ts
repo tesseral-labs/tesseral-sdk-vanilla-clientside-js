@@ -63,8 +63,8 @@ export class UserInvites {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -153,7 +153,7 @@ export class UserInvites {
     }
 
     /**
-     * @param {Tesseral.UserInvite} request
+     * @param {Tesseral.UserInvitesCreateUserInviteRequest} request
      * @param {UserInvites.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Tesseral.BadRequestError}
@@ -162,12 +162,20 @@ export class UserInvites {
      * @throws {@link Tesseral.NotFoundError}
      *
      * @example
-     *     await client.userInvites.createUserInvite({})
+     *     await client.userInvites.createUserInvite({
+     *         body: {}
+     *     })
      */
     public async createUserInvite(
-        request: Tesseral.UserInvite,
+        request: Tesseral.UserInvitesCreateUserInviteRequest,
         requestOptions?: UserInvites.RequestOptions,
     ): Promise<Tesseral.CreateUserInviteResponse> {
+        const { sendEmail, body: _body } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (sendEmail != null) {
+            _queryParams["sendEmail"] = sendEmail.toString();
+        }
+
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -178,15 +186,16 @@ export class UserInvites {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
+            queryParameters: _queryParams,
             requestType: "json",
-            body: serializers.UserInvite.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.UserInvite.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -293,8 +302,8 @@ export class UserInvites {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -409,8 +418,8 @@ export class UserInvites {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.6",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.6",
+                "X-Fern-SDK-Version": "0.0.7",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.7",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

@@ -8,7 +8,7 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
-export declare namespace ScimApiKeys {
+export declare namespace UserRoleAssignments {
     export interface Options {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
@@ -28,12 +28,14 @@ export declare namespace ScimApiKeys {
     }
 }
 
-export class ScimApiKeys {
-    constructor(protected readonly _options: ScimApiKeys.Options) {}
+export class UserRoleAssignments {
+    constructor(protected readonly _options: UserRoleAssignments.Options) {}
 
     /**
-     * @param {Tesseral.ScimApiKeysListScimapiKeysRequest} request
-     * @param {ScimApiKeys.RequestOptions} requestOptions - Request-specific configuration.
+     * List User Role Assignments.
+     *
+     * @param {Tesseral.UserRoleAssignmentsListUserRoleAssignmentsRequest} request
+     * @param {UserRoleAssignments.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Tesseral.BadRequestError}
      * @throws {@link Tesseral.UnauthorizedError}
@@ -41,14 +43,22 @@ export class ScimApiKeys {
      * @throws {@link Tesseral.NotFoundError}
      *
      * @example
-     *     await client.scimApiKeys.listScimapiKeys()
+     *     await client.userRoleAssignments.listUserRoleAssignments()
      */
-    public async listScimapiKeys(
-        request: Tesseral.ScimApiKeysListScimapiKeysRequest = {},
-        requestOptions?: ScimApiKeys.RequestOptions,
-    ): Promise<Tesseral.ListScimapiKeysResponse> {
-        const { pageToken } = request;
+    public async listUserRoleAssignments(
+        request: Tesseral.UserRoleAssignmentsListUserRoleAssignmentsRequest = {},
+        requestOptions?: UserRoleAssignments.RequestOptions,
+    ): Promise<Tesseral.ListUserRoleAssignmentsResponse> {
+        const { userId, roleId, pageToken } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (userId != null) {
+            _queryParams["userId"] = userId;
+        }
+
+        if (roleId != null) {
+            _queryParams["roleId"] = roleId;
+        }
+
         if (pageToken != null) {
             _queryParams["pageToken"] = pageToken;
         }
@@ -57,7 +67,7 @@ export class ScimApiKeys {
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "frontend/v1/scim-api-keys",
+                "frontend/v1/user-role-assignments",
             ),
             method: "GET",
             headers: {
@@ -78,7 +88,7 @@ export class ScimApiKeys {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListScimapiKeysResponse.parseOrThrow(_response.body, {
+            return serializers.ListUserRoleAssignmentsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -144,7 +154,9 @@ export class ScimApiKeys {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError("Timeout exceeded when calling GET /frontend/v1/scim-api-keys.");
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling GET /frontend/v1/user-role-assignments.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -153,8 +165,10 @@ export class ScimApiKeys {
     }
 
     /**
-     * @param {Tesseral.ScimapiKey} request
-     * @param {ScimApiKeys.RequestOptions} requestOptions - Request-specific configuration.
+     * Create a User Role Assignment.
+     *
+     * @param {Tesseral.UserRoleAssignment} request
+     * @param {UserRoleAssignments.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Tesseral.BadRequestError}
      * @throws {@link Tesseral.UnauthorizedError}
@@ -162,17 +176,17 @@ export class ScimApiKeys {
      * @throws {@link Tesseral.NotFoundError}
      *
      * @example
-     *     await client.scimApiKeys.createScimapiKey({})
+     *     await client.userRoleAssignments.createUserRoleAssignment({})
      */
-    public async createScimapiKey(
-        request: Tesseral.ScimapiKey,
-        requestOptions?: ScimApiKeys.RequestOptions,
-    ): Promise<Tesseral.CreateScimapiKeyResponse> {
+    public async createUserRoleAssignment(
+        request: Tesseral.UserRoleAssignment,
+        requestOptions?: UserRoleAssignments.RequestOptions,
+    ): Promise<Tesseral.CreateUserRoleAssignmentResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                "frontend/v1/scim-api-keys",
+                "frontend/v1/user-role-assignments",
             ),
             method: "POST",
             headers: {
@@ -186,14 +200,14 @@ export class ScimApiKeys {
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.ScimapiKey.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.UserRoleAssignment.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.CreateScimapiKeyResponse.parseOrThrow(_response.body, {
+            return serializers.CreateUserRoleAssignmentResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -259,7 +273,9 @@ export class ScimApiKeys {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.TesseralTimeoutError("Timeout exceeded when calling POST /frontend/v1/scim-api-keys.");
+                throw new errors.TesseralTimeoutError(
+                    "Timeout exceeded when calling POST /frontend/v1/user-role-assignments.",
+                );
             case "unknown":
                 throw new errors.TesseralError({
                     message: _response.error.errorMessage,
@@ -268,8 +284,10 @@ export class ScimApiKeys {
     }
 
     /**
+     * Get a User Role Assignment.
+     *
      * @param {string} id
-     * @param {ScimApiKeys.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UserRoleAssignments.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Tesseral.BadRequestError}
      * @throws {@link Tesseral.UnauthorizedError}
@@ -277,17 +295,17 @@ export class ScimApiKeys {
      * @throws {@link Tesseral.NotFoundError}
      *
      * @example
-     *     await client.scimApiKeys.getScimapiKey("id")
+     *     await client.userRoleAssignments.getUserRoleAssignment("id")
      */
-    public async getScimapiKey(
+    public async getUserRoleAssignment(
         id: string,
-        requestOptions?: ScimApiKeys.RequestOptions,
-    ): Promise<Tesseral.GetScimapiKeyResponse> {
+        requestOptions?: UserRoleAssignments.RequestOptions,
+    ): Promise<Tesseral.GetUserRoleAssignmentResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `frontend/v1/scim-api-keys/${encodeURIComponent(id)}`,
+                `frontend/v1/user-role-assignments/${encodeURIComponent(id)}`,
             ),
             method: "GET",
             headers: {
@@ -307,7 +325,7 @@ export class ScimApiKeys {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.GetScimapiKeyResponse.parseOrThrow(_response.body, {
+            return serializers.GetUserRoleAssignmentResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -374,7 +392,7 @@ export class ScimApiKeys {
                 });
             case "timeout":
                 throw new errors.TesseralTimeoutError(
-                    "Timeout exceeded when calling GET /frontend/v1/scim-api-keys/{id}.",
+                    "Timeout exceeded when calling GET /frontend/v1/user-role-assignments/{id}.",
                 );
             case "unknown":
                 throw new errors.TesseralError({
@@ -384,8 +402,10 @@ export class ScimApiKeys {
     }
 
     /**
+     * Delete a User Role Assignment.
+     *
      * @param {string} id
-     * @param {ScimApiKeys.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UserRoleAssignments.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Tesseral.BadRequestError}
      * @throws {@link Tesseral.UnauthorizedError}
@@ -393,17 +413,17 @@ export class ScimApiKeys {
      * @throws {@link Tesseral.NotFoundError}
      *
      * @example
-     *     await client.scimApiKeys.deleteScimapiKey("id")
+     *     await client.userRoleAssignments.deleteUserRoleAssignment("id")
      */
-    public async deleteScimapiKey(
+    public async deleteUserRoleAssignment(
         id: string,
-        requestOptions?: ScimApiKeys.RequestOptions,
-    ): Promise<Tesseral.DeleteScimapiKeyResponse> {
+        requestOptions?: UserRoleAssignments.RequestOptions,
+    ): Promise<Tesseral.DeleteUserRoleAssignmentResponse> {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `frontend/v1/scim-api-keys/${encodeURIComponent(id)}`,
+                `frontend/v1/user-role-assignments/${encodeURIComponent(id)}`,
             ),
             method: "DELETE",
             headers: {
@@ -423,7 +443,7 @@ export class ScimApiKeys {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.DeleteScimapiKeyResponse.parseOrThrow(_response.body, {
+            return serializers.DeleteUserRoleAssignmentResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -490,242 +510,7 @@ export class ScimApiKeys {
                 });
             case "timeout":
                 throw new errors.TesseralTimeoutError(
-                    "Timeout exceeded when calling DELETE /frontend/v1/scim-api-keys/{id}.",
-                );
-            case "unknown":
-                throw new errors.TesseralError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * @param {string} id
-     * @param {Tesseral.ScimapiKey} request
-     * @param {ScimApiKeys.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link Tesseral.BadRequestError}
-     * @throws {@link Tesseral.UnauthorizedError}
-     * @throws {@link Tesseral.ForbiddenError}
-     * @throws {@link Tesseral.NotFoundError}
-     *
-     * @example
-     *     await client.scimApiKeys.updateScimapiKey("id", {})
-     */
-    public async updateScimapiKey(
-        id: string,
-        request: Tesseral.ScimapiKey,
-        requestOptions?: ScimApiKeys.RequestOptions,
-    ): Promise<Tesseral.UpdateScimapiKeyResponse> {
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `frontend/v1/scim-api-keys/${encodeURIComponent(id)}`,
-            ),
-            method: "PATCH",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.7",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.7",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            body: serializers.ScimapiKey.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.UpdateScimapiKeyResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new Tesseral.BadRequestError(
-                        serializers.ApiError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                case 401:
-                    throw new Tesseral.UnauthorizedError(
-                        serializers.ApiError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                case 403:
-                    throw new Tesseral.ForbiddenError(
-                        serializers.ApiError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                case 404:
-                    throw new Tesseral.NotFoundError(
-                        serializers.ApiError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                default:
-                    throw new errors.TesseralError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.TesseralError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.TesseralTimeoutError(
-                    "Timeout exceeded when calling PATCH /frontend/v1/scim-api-keys/{id}.",
-                );
-            case "unknown":
-                throw new errors.TesseralError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * @param {string} id
-     * @param {ScimApiKeys.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link Tesseral.BadRequestError}
-     * @throws {@link Tesseral.UnauthorizedError}
-     * @throws {@link Tesseral.ForbiddenError}
-     * @throws {@link Tesseral.NotFoundError}
-     *
-     * @example
-     *     await client.scimApiKeys.revokeScimapiKey("id")
-     */
-    public async revokeScimapiKey(
-        id: string,
-        requestOptions?: ScimApiKeys.RequestOptions,
-    ): Promise<Tesseral.RevokeScimapiKeyResponse> {
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `frontend/v1/scim-api-keys/${encodeURIComponent(id)}/revoke`,
-            ),
-            method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.7",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.7",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return serializers.RevokeScimapiKeyResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                skipValidation: true,
-                breadcrumbsPrefix: ["response"],
-            });
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new Tesseral.BadRequestError(
-                        serializers.ApiError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                case 401:
-                    throw new Tesseral.UnauthorizedError(
-                        serializers.ApiError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                case 403:
-                    throw new Tesseral.ForbiddenError(
-                        serializers.ApiError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                case 404:
-                    throw new Tesseral.NotFoundError(
-                        serializers.ApiError.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                default:
-                    throw new errors.TesseralError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.TesseralError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.TesseralTimeoutError(
-                    "Timeout exceeded when calling POST /frontend/v1/scim-api-keys/{id}/revoke.",
+                    "Timeout exceeded when calling DELETE /frontend/v1/user-role-assignments/{id}.",
                 );
             case "unknown":
                 throw new errors.TesseralError({
