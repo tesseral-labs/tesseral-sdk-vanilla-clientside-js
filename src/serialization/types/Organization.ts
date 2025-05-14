@@ -23,6 +23,7 @@ export const Organization: core.serialization.ObjectSchema<serializers.Organizat
         googleHostedDomains: core.serialization.list(core.serialization.string()).optional(),
         microsoftTenantIds: core.serialization.list(core.serialization.string()).optional(),
         samlEnabled: core.serialization.boolean().optional(),
+        customRolesEnabled: core.serialization.boolean().optional(),
     });
 
 export declare namespace Organization {
@@ -42,5 +43,6 @@ export declare namespace Organization {
         googleHostedDomains?: string[] | null;
         microsoftTenantIds?: string[] | null;
         samlEnabled?: boolean | null;
+        customRolesEnabled?: boolean | null;
     }
 }

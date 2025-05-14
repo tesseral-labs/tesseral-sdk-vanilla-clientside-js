@@ -10,7 +10,7 @@ export interface AccessTokenUser {
     id: string;
     /** The User's email. */
     email: string;
-    /** The User's full name, or an empty string if not known. */
+    /** The User's full name. */
     displayName?: string;
     /** A URL of the User's profile picture. */
     profilePictureUrl?: string;
