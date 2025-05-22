@@ -23,7 +23,7 @@ export interface AccessTokenClaims {
     nbf: number;
     /** Will always be equal to the `nbf` claim. */
     iat: number;
-    /** The set of actions this user has permission to carry out. */
+    /** The set of actions the User has permission to carry out. */
     actions?: string[];
     /** The Organization the User is logged into. */
     organization: Tesseral.AccessTokenOrganization;

@@ -10,6 +10,7 @@ export interface User {
     owner?: boolean;
     googleUserId?: string;
     microsoftUserId?: string;
+    githubUserId?: string;
     hasAuthenticatorApp?: boolean;
     displayName?: string;
     profilePictureUrl?: string;

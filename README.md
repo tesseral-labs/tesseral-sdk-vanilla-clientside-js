@@ -34,7 +34,7 @@ following namespace:
 ```typescript
 import { Tesseral } from "@tesseral/tesseral-vanilla-clientside";
 
-const request: Tesseral.OrganizationsGetOrganizationGoogleHostedDomainsRequest = {
+const request: Tesseral.ApiKeyRoleAssignmentsListApiKeyRoleAssignmentsRequest = {
     ...
 };
 ```

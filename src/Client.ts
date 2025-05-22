@@ -7,6 +7,8 @@ import * as Tesseral from "./api/index";
 import * as serializers from "./serialization/index";
 import urlJoin from "url-join";
 import * as errors from "./errors/index";
+import { ApiKeyRoleAssignments } from "./api/resources/apiKeyRoleAssignments/client/Client";
+import { ApiKeys } from "./api/resources/apiKeys/client/Client";
 import { Organizations } from "./api/resources/organizations/client/Client";
 import { Me } from "./api/resources/me/client/Client";
 import { Projects } from "./api/resources/projects/client/Client";
@@ -38,6 +40,8 @@ export declare namespace TesseralClient {
 }
 
 export class TesseralClient {
+    protected _apiKeyRoleAssignments: ApiKeyRoleAssignments | undefined;
+    protected _apiKeys: ApiKeys | undefined;
     protected _organizations: Organizations | undefined;
     protected _me: Me | undefined;
     protected _projects: Projects | undefined;
@@ -49,6 +53,14 @@ export class TesseralClient {
     protected _users: Users | undefined;
 
     constructor(protected readonly _options: TesseralClient.Options) {}
+
+    public get apiKeyRoleAssignments(): ApiKeyRoleAssignments {
+        return (this._apiKeyRoleAssignments ??= new ApiKeyRoleAssignments(this._options));
+    }
+
+    public get apiKeys(): ApiKeys {
+        return (this._apiKeys ??= new ApiKeys(this._options));
+    }
 
     public get organizations(): Organizations {
         return (this._organizations ??= new Organizations(this._options));
@@ -112,8 +124,8 @@ export class TesseralClient {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.7",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.7",
+                "X-Fern-SDK-Version": "0.0.8",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -227,8 +239,8 @@ export class TesseralClient {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.7",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.7",
+                "X-Fern-SDK-Version": "0.0.8",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

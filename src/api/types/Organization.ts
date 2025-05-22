@@ -9,6 +9,7 @@ export interface Organization {
     updateTime?: Date;
     logInWithGoogle?: boolean;
     logInWithMicrosoft?: boolean;
+    logInWithGithub?: boolean;
     logInWithEmail?: boolean;
     logInWithPassword?: boolean;
     logInWithSaml?: boolean;
@@ -19,4 +20,5 @@ export interface Organization {
     microsoftTenantIds?: string[];
     samlEnabled?: boolean;
     customRolesEnabled?: boolean;
+    apiKeysEnabled?: boolean;
 }

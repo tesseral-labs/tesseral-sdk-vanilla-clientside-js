@@ -9,10 +9,13 @@ export interface Project {
     updateTime?: Date;
     logInWithGoogle?: boolean;
     logInWithMicrosoft?: boolean;
+    logInWithGithub?: boolean;
     logInWithEmail?: boolean;
     logInWithPassword?: boolean;
     logInWithSaml?: boolean;
     logInWithAuthenticatorApp?: boolean;
     logInWithPasskey?: boolean;
     vaultDomain?: string;
+    apiKeysEnabled?: boolean;
+    apiKeySecretTokenPrefix?: string;
 }
