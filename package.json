@@ -1,6 +1,6 @@
 {
     "name": "@tesseral/tesseral-vanilla-clientside",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "private": false,
     "repository": "https://github.com/tesseral-labs/tesseral-sdk-vanilla-clientside-js",
     "license": "MIT",

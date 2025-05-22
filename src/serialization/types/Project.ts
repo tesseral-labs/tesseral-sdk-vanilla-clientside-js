@@ -14,12 +14,15 @@ export const Project: core.serialization.ObjectSchema<serializers.Project.Raw, T
         updateTime: core.serialization.date().optional(),
         logInWithGoogle: core.serialization.boolean().optional(),
         logInWithMicrosoft: core.serialization.boolean().optional(),
+        logInWithGithub: core.serialization.boolean().optional(),
         logInWithEmail: core.serialization.boolean().optional(),
         logInWithPassword: core.serialization.boolean().optional(),
         logInWithSaml: core.serialization.boolean().optional(),
         logInWithAuthenticatorApp: core.serialization.boolean().optional(),
         logInWithPasskey: core.serialization.boolean().optional(),
         vaultDomain: core.serialization.string().optional(),
+        apiKeysEnabled: core.serialization.boolean().optional(),
+        apiKeySecretTokenPrefix: core.serialization.string().optional(),
     });
 
 export declare namespace Project {
@@ -30,11 +33,14 @@ export declare namespace Project {
         updateTime?: string | null;
         logInWithGoogle?: boolean | null;
         logInWithMicrosoft?: boolean | null;
+        logInWithGithub?: boolean | null;
         logInWithEmail?: boolean | null;
         logInWithPassword?: boolean | null;
         logInWithSaml?: boolean | null;
         logInWithAuthenticatorApp?: boolean | null;
         logInWithPasskey?: boolean | null;
         vaultDomain?: string | null;
+        apiKeysEnabled?: boolean | null;
+        apiKeySecretTokenPrefix?: string | null;
     }
 }
