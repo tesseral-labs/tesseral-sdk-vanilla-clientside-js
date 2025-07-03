@@ -18,12 +18,14 @@ export const Organization: core.serialization.ObjectSchema<serializers.Organizat
         logInWithEmail: core.serialization.boolean().optional(),
         logInWithPassword: core.serialization.boolean().optional(),
         logInWithSaml: core.serialization.boolean().optional(),
+        logInWithOidc: core.serialization.boolean().optional(),
         logInWithAuthenticatorApp: core.serialization.boolean().optional(),
         logInWithPasskey: core.serialization.boolean().optional(),
         requireMfa: core.serialization.boolean().optional(),
         googleHostedDomains: core.serialization.list(core.serialization.string()).optional(),
         microsoftTenantIds: core.serialization.list(core.serialization.string()).optional(),
         samlEnabled: core.serialization.boolean().optional(),
+        scimEnabled: core.serialization.boolean().optional(),
         customRolesEnabled: core.serialization.boolean().optional(),
         apiKeysEnabled: core.serialization.boolean().optional(),
     });
@@ -40,12 +42,14 @@ export declare namespace Organization {
         logInWithEmail?: boolean | null;
         logInWithPassword?: boolean | null;
         logInWithSaml?: boolean | null;
+        logInWithOidc?: boolean | null;
         logInWithAuthenticatorApp?: boolean | null;
         logInWithPasskey?: boolean | null;
         requireMfa?: boolean | null;
         googleHostedDomains?: string[] | null;
         microsoftTenantIds?: string[] | null;
         samlEnabled?: boolean | null;
+        scimEnabled?: boolean | null;
         customRolesEnabled?: boolean | null;
         apiKeysEnabled?: boolean | null;
     }

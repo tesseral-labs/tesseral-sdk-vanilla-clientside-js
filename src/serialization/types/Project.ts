@@ -18,11 +18,13 @@ export const Project: core.serialization.ObjectSchema<serializers.Project.Raw, T
         logInWithEmail: core.serialization.boolean().optional(),
         logInWithPassword: core.serialization.boolean().optional(),
         logInWithSaml: core.serialization.boolean().optional(),
+        logInWithOidc: core.serialization.boolean().optional(),
         logInWithAuthenticatorApp: core.serialization.boolean().optional(),
         logInWithPasskey: core.serialization.boolean().optional(),
         vaultDomain: core.serialization.string().optional(),
         apiKeysEnabled: core.serialization.boolean().optional(),
         apiKeySecretTokenPrefix: core.serialization.string().optional(),
+        auditLogsEnabled: core.serialization.boolean().optional(),
     });
 
 export declare namespace Project {
@@ -37,10 +39,12 @@ export declare namespace Project {
         logInWithEmail?: boolean | null;
         logInWithPassword?: boolean | null;
         logInWithSaml?: boolean | null;
+        logInWithOidc?: boolean | null;
         logInWithAuthenticatorApp?: boolean | null;
         logInWithPasskey?: boolean | null;
         vaultDomain?: string | null;
         apiKeysEnabled?: boolean | null;
         apiKeySecretTokenPrefix?: string | null;
+        auditLogsEnabled?: boolean | null;
     }
 }

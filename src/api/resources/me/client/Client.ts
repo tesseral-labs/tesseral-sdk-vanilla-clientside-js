@@ -53,8 +53,8 @@ export class Me {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -142,6 +142,121 @@ export class Me {
     }
 
     /**
+     * @param {Tesseral.User} request
+     * @param {Me.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Tesseral.BadRequestError}
+     * @throws {@link Tesseral.UnauthorizedError}
+     * @throws {@link Tesseral.ForbiddenError}
+     * @throws {@link Tesseral.NotFoundError}
+     *
+     * @example
+     *     await client.me.updateMe({})
+     */
+    public async updateMe(
+        request: Tesseral.User,
+        requestOptions?: Me.RequestOptions,
+    ): Promise<Tesseral.UpdateMeResponse> {
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "frontend/v1/me",
+            ),
+            method: "PATCH",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.User.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.UpdateMeResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new Tesseral.BadRequestError(
+                        serializers.ApiError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 401:
+                    throw new Tesseral.UnauthorizedError(
+                        serializers.ApiError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 403:
+                    throw new Tesseral.ForbiddenError(
+                        serializers.ApiError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 404:
+                    throw new Tesseral.NotFoundError(
+                        serializers.ApiError.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                default:
+                    throw new errors.TesseralError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.TesseralError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.TesseralTimeoutError("Timeout exceeded when calling PATCH /frontend/v1/me.");
+            case "unknown":
+                throw new errors.TesseralError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
      * @param {Me.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link Tesseral.BadRequestError}
@@ -165,8 +280,8 @@ export class Me {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -281,8 +396,8 @@ export class Me {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -404,8 +519,8 @@ export class Me {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -515,8 +630,8 @@ export class Me {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -631,8 +746,8 @@ export class Me {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -748,8 +863,8 @@ export class Me {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -866,8 +981,8 @@ export class Me {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -981,8 +1096,8 @@ export class Me {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

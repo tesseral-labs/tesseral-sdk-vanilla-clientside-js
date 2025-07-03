@@ -592,6 +592,56 @@ await client.apiKeys.revokeApiKey("id");
 </dl>
 </details>
 
+## AuditLogEvents
+
+<details><summary><code>client.auditLogEvents.<a href="/src/api/resources/auditLogEvents/client/Client.ts">listAuditLogEvents</a>({ ...params }) -> Tesseral.ListAuditLogEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.auditLogEvents.listAuditLogEvents();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Tesseral.AuditLogEventsListAuditLogEventsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AuditLogEvents.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Organizations
 
 <details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganizationGoogleHostedDomains</a>({ ...params }) -> Tesseral.GetOrganizationGoogleHostedDomainsResponse</code></summary>
@@ -905,6 +955,54 @@ await client.me.whoami();
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `Me.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.me.<a href="/src/api/resources/me/client/Client.ts">updateMe</a>({ ...params }) -> Tesseral.UpdateMeResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.me.updateMe({});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Tesseral.User`
+
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -1285,6 +1383,256 @@ await client.me.listSwitchableOrganizations();
 <dd>
 
 **requestOptions:** `Me.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## OidcConnections
+
+<details><summary><code>client.oidcConnections.<a href="/src/api/resources/oidcConnections/client/Client.ts">listOidcConnections</a>({ ...params }) -> Tesseral.ListOidcConnectionsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oidcConnections.listOidcConnections();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Tesseral.OidcConnectionsListOidcConnectionsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OidcConnections.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oidcConnections.<a href="/src/api/resources/oidcConnections/client/Client.ts">createOidcConnection</a>({ ...params }) -> Tesseral.CreateOidcConnectionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oidcConnections.createOidcConnection({});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Tesseral.OidcConnection`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OidcConnections.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oidcConnections.<a href="/src/api/resources/oidcConnections/client/Client.ts">getOidcConnection</a>(id) -> Tesseral.GetOidcConnectionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oidcConnections.getOidcConnection("id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OidcConnections.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oidcConnections.<a href="/src/api/resources/oidcConnections/client/Client.ts">deleteOidcConnection</a>(id) -> Tesseral.DeleteOidcConnectionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oidcConnections.deleteOidcConnection("id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OidcConnections.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.oidcConnections.<a href="/src/api/resources/oidcConnections/client/Client.ts">updateOidcConnection</a>(id, { ...params }) -> Tesseral.UpdateOidcConnectionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.oidcConnections.updateOidcConnection("id", {});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Tesseral.OidcConnection`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `OidcConnections.RequestOptions`
 
 </dd>
 </dl>

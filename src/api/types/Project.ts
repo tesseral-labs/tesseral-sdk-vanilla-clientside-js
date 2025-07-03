@@ -13,9 +13,11 @@ export interface Project {
     logInWithEmail?: boolean;
     logInWithPassword?: boolean;
     logInWithSaml?: boolean;
+    logInWithOidc?: boolean;
     logInWithAuthenticatorApp?: boolean;
     logInWithPasskey?: boolean;
     vaultDomain?: string;
     apiKeysEnabled?: boolean;
     apiKeySecretTokenPrefix?: string;
+    auditLogsEnabled?: boolean;
 }
