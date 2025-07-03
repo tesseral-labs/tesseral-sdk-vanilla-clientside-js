@@ -13,12 +13,14 @@ export interface Organization {
     logInWithEmail?: boolean;
     logInWithPassword?: boolean;
     logInWithSaml?: boolean;
+    logInWithOidc?: boolean;
     logInWithAuthenticatorApp?: boolean;
     logInWithPasskey?: boolean;
     requireMfa?: boolean;
     googleHostedDomains?: string[];
     microsoftTenantIds?: string[];
     samlEnabled?: boolean;
+    scimEnabled?: boolean;
     customRolesEnabled?: boolean;
     apiKeysEnabled?: boolean;
 }

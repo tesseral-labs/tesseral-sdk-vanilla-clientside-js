@@ -9,8 +9,10 @@ import urlJoin from "url-join";
 import * as errors from "./errors/index";
 import { ApiKeyRoleAssignments } from "./api/resources/apiKeyRoleAssignments/client/Client";
 import { ApiKeys } from "./api/resources/apiKeys/client/Client";
+import { AuditLogEvents } from "./api/resources/auditLogEvents/client/Client";
 import { Organizations } from "./api/resources/organizations/client/Client";
 import { Me } from "./api/resources/me/client/Client";
+import { OidcConnections } from "./api/resources/oidcConnections/client/Client";
 import { Projects } from "./api/resources/projects/client/Client";
 import { Roles } from "./api/resources/roles/client/Client";
 import { SamlConnections } from "./api/resources/samlConnections/client/Client";
@@ -42,8 +44,10 @@ export declare namespace TesseralClient {
 export class TesseralClient {
     protected _apiKeyRoleAssignments: ApiKeyRoleAssignments | undefined;
     protected _apiKeys: ApiKeys | undefined;
+    protected _auditLogEvents: AuditLogEvents | undefined;
     protected _organizations: Organizations | undefined;
     protected _me: Me | undefined;
+    protected _oidcConnections: OidcConnections | undefined;
     protected _projects: Projects | undefined;
     protected _roles: Roles | undefined;
     protected _samlConnections: SamlConnections | undefined;
@@ -62,12 +66,20 @@ export class TesseralClient {
         return (this._apiKeys ??= new ApiKeys(this._options));
     }
 
+    public get auditLogEvents(): AuditLogEvents {
+        return (this._auditLogEvents ??= new AuditLogEvents(this._options));
+    }
+
     public get organizations(): Organizations {
         return (this._organizations ??= new Organizations(this._options));
     }
 
     public get me(): Me {
         return (this._me ??= new Me(this._options));
+    }
+
+    public get oidcConnections(): OidcConnections {
+        return (this._oidcConnections ??= new OidcConnections(this._options));
     }
 
     public get projects(): Projects {
@@ -124,8 +136,8 @@ export class TesseralClient {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -239,8 +251,8 @@ export class TesseralClient {
             headers: {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@tesseral/tesseral-vanilla-clientside",
-                "X-Fern-SDK-Version": "0.0.8",
-                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.8",
+                "X-Fern-SDK-Version": "0.0.9",
+                "User-Agent": "@tesseral/tesseral-vanilla-clientside/0.0.9",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
